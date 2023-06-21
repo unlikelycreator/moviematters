@@ -1,0 +1,15 @@
+.screen {
+    margin-left: 4em;
+    height: 100%;
+    height: 100vh;
+    overflow: auto;
+  }
+  
+ 
+  
+  
+@media all and (max-width: 500px) {
+  .screen {
+    margin-left: 0em;
+  }
+}
