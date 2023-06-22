@@ -10,6 +10,7 @@ import ArchiveScreen from "./Components/Pages/ArchiveScreen";
 import ContactScreen from "./Components/Pages/ContactScreen";
 import SearchScreen from "./Components/Pages/SearchScreen";
 import PencilScreen from "./Components/Pages/PencilScreen";
+
 function App() {
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(false);
   const [currentScreen, setCurrentScreen] = useState("Home");

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromApi } from "./utils/HandleApi";
 import "./css/Screen.css";
-
-
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import Slider from "react-slick";
 
 function HomeScreen() {
   const [data, setData] = useState([]);
@@ -16,34 +13,18 @@ function HomeScreen() {
     });
   }, []);
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const slideWidth = 100 / data.slice(0, 5).length;
 
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? data.slice(0, 5).length - 1 : prevIndex - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === data.slice(0, 5).length - 1 ? 0 : prevIndex + 1));
+  };
   const Card = ({ item }) => {
-    const votePercentage = (item.vote_average / 10) * 100;
-    const getColorStyles = () => {
-      // Customize the color based on the vote percentage
-      if (votePercentage >= 70) {
-        return {
-          textColor: '#ffffff', // Text color
-          pathColor: '#29a329', // Progress bar color
-          trailColor: '#e4e4e4', // Background color
-        };
-      } else if (votePercentage >= 40) {
-        return {
-          textColor: '#ffffff',
-          pathColor: '#f3d415',
-          trailColor: '#e4e4e4',
-        };
-      } else {
-        return {
-          textColor: '#ffffff',
-          pathColor: '#e60000',
-          trailColor: '#e4e4e4',
-        };
-      }
-    };
-  
-    const colorStyles = getColorStyles();
-    
+
     return (
       <div className="card">
         <img
@@ -52,12 +33,9 @@ function HomeScreen() {
         />
         <h3>{item.title || item.name}</h3>
         <div className="card-footer">
-          <span>{item.media_type}</span>
-          <CircularProgressbar className="rating-bar" value={votePercentage} text={`${item.vote_average.toFixed(2)}%`}  styles={buildStyles({
-              textSize: '25px',
-              pathTransitionDuration: 0.6, // Animation duration
-              ...colorStyles, // Apply the custom color styles
-            })} />
+          <p>{(item.first_air_date || item.release_date).split('-')[0]}</p>
+          <p className="media-type">{item.media_type}</p>
+          <p>{item.vote_average.toFixed(1)}⭐</p>
         </div>
       </div>
     );
@@ -66,22 +44,41 @@ function HomeScreen() {
   return (
     <div className="screen">
       <div className="header-image" style={{ height: "50%" }}>
-        {data.length > 0 && (
-          <div
-            className="backdrop-image"
-            style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original${data[0].backdrop_path})`,
-              backgroundSize: "100%",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <div className="header-content">
-              <h2>{data[0].title || data[0].name}</h2>
-              <p>{data[0].overview}</p>
-            </div>
+        <div className="slider-container">
+          <div className="slider" style={{ transform: `translateX(-${currentIndex * slideWidth}%)` }}>
+            {data.slice(0, 5).map((item, index) => (
+              <div key={index} className="slide" style={{ width: `${slideWidth}%` }}>
+                <div
+                  className="slide-image"
+                  style={{
+                    backgroundImage: `url(https://image.tmdb.org/t/p/original${item.backdrop_path})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                >
+                  <div className="header-content">
+                    {currentIndex === index && (
+                      <>
+                        <h2>{item.title || item.name}</h2>
+                        <p>{item.overview}</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
+          <div className="slider-controls">
+            <button className="prev-btn" onClick={prevSlide}>
+              &lt;
+            </button>
+            <button className="next-btn" onClick={nextSlide}>
+              &gt;
+            </button>
+          </div>
+        </div>
       </div>
+
       <div className="card-container">
         {data.map((item) => (
           <Card key={item.id} item={item} />

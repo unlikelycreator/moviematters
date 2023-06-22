@@ -14,7 +14,7 @@ export const getDataFromApi = (callback) => {
     .then((response) => {
       // Process the response data
       const data = response.data.results;
-
+      console.log(data)
       // Pass the data to the callback function
       if (typeof callback === 'function') {
         callback(data);
