@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromApi } from "./utils/HandleApi";
 import "./css/Screen.css";
-import Slider from "react-slick";
+
 
 function HomeScreen() {
   const [data, setData] = useState([]);
