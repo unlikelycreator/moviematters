@@ -35,17 +35,19 @@ function HomeScreen() {
         <div className="card-footer">
           <p>{(item.first_air_date || item.release_date).split('-')[0]}</p>
           <p className="media-type">{item.media_type}</p>
-          <p>{item.vote_average.toFixed(1)}⭐</p>
+          <p>{item.vote_average.toFixed(1)} ★</p>
         </div>
       </div>
     );
   };
+
+  
   // Render the data in your component
   return (
     <div className="screen">
       <div className="header-image" style={{ height: "50%" }}>
         <div className="slider-container">
-          <div className="slider" style={{ transform: `translateX(-${currentIndex * slideWidth}%)` }}>
+        <div className="slider" style={{ transform: `translateX(-${currentIndex * slideWidth}%)` }}>
             {data.slice(0, 5).map((item, index) => (
               <div key={index} className="slide" style={{ width: `${slideWidth}%` }}>
                 <div
@@ -57,12 +59,9 @@ function HomeScreen() {
                   }}
                 >
                   <div className="header-content">
-                    {currentIndex === index && (
-                      <>
-                        <h2>{item.title || item.name}</h2>
-                        <p>{item.overview}</p>
-                      </>
-                    )}
+                    <h2>{item.title || item.name}</h2>
+                    <h1>{item.vote_average.toFixed(1)}⭐</h1>
+                    <p>{item.overview}</p>
                   </div>
                 </div>
               </div>

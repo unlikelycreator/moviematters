@@ -1,5 +1,7 @@
 .header-image {
   height: 50%;
+  -webkit-mask-image: linear-gradient(#000, rgba(0, 0, 0, 0.2));
+  mask-image: linear-gradient(#000, rgba(0,0,0,0.2));
 }
 
 .slider-container {
@@ -17,13 +19,14 @@
 }
 
 .slide {
-  flex: 0 0 auto;
+  flex: 0 0 20%;
 }
 
 .slide .slide-image {
   width: 100%;
   height: 100%;
   background-position: center;
+  position: relative;
 }
 
 .header-content {
@@ -31,13 +34,16 @@
   bottom: 10%;
   left: 20px;
   text-align: left;
-  color: #fff;
+  color: #ffffff;
   max-width: 500px;
+  z-index: 1;
 }
 
 .header-content h2 {
   font-size: 50px;
+  color: #267fdd;
 }
+
 
 .slider-controls {
   position: absolute;
@@ -50,10 +56,12 @@
 .next-btn {
   border: none;
   background: none;
-  color: #fff;
+  color: #ffffff;
   font-size: 24px;
   margin: 0 10px;
   cursor: pointer;
+  background-color: #1d1d1d5d;
+  padding: 0px 10px;
 }
 
 .prev-btn:focus,
@@ -61,99 +69,121 @@
   outline: none;
 }
 
-  
-  .header-content h2{
-    font-size: 50px;
-  }
+.header-content h2 {
+  font-size: 50px;
+}
 
-  .card-container {
-    padding-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .card {
-    max-width: 180px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #1d1d1d;
-    text-align: left;
-    margin: 20px;
-    color: white;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s;
-  }
-  .card:hover{
-    transform: scale(1.1); /* Zoom in the image on hover */
-  }
-  .card img {
-    max-width: 100%;
-    object-fit: contain;
-  }
-  
-  .card h3 {
-    font-size: 15px;
-    margin: 5px 10px 0px 10px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-  }
-  
-  .card-footer {
-    font-size: 12px;
-    margin: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .card-footer .media-type {
-    background-color: rgba(72, 147, 240, 0.477);
-    width: 50px;
-    display: grid;
-    text-align: center;
-    border-radius: 10px;
-    color: #bbbbbb;
-  }
-  
-  .rating-bar {
-    height: 40px;
-    width: 40px !important;
-  }
+.card-container {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
 
-  .card-footer p{
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-  }
+.card {
+  max-width: 180px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #1d1d1d;
+  text-align: left;
+  margin: 20px;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: scale(1.1); /* Zoom in the image on hover */
+}
+.card img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.card h3 {
+  font-size: 15px;
+  margin: 5px 10px 0px 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.card-footer {
+  font-size: 12px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer .media-type {
+  background-color: rgba(72, 147, 240, 0.477);
+  width: 50px;
+  display: grid;
+  text-align: center;
+  border-radius: 10px;
+  color: #bbbbbb;
+}
+
+.rating-bar {
+  height: 40px;
+  width: 40px !important;
+}
+
+.card-footer p {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
 .screen {
   position: relative;
 }
 
-
 @media all and (max-width: 720px) {
-  .card{
+  .card {
     max-width: 160px;
   }
   .header-content {
-    bottom: 30%;
+    bottom: 20%;
+    left: 10px;
+    max-width:100%;
   }
-  .header-content h2{
-    font-size: 30px;
+  .header-content h2 {
+    font-size: 25px;
   }
+  .header-content p {
+    font-size: 13px;
+  }  
 }
 
 @media all and (max-width: 450px) {
-  .card{
+  .card {
     max-width: 140px;
   }
-  .card-footer .media-type{
+  .card-footer .media-type {
     display: none;
   }
+  
+}
+
+@media (max-height: 700px){
+  .header-content {
+    bottom: 20%;
+    left: 10px;
+    max-width:90%;
+  }
+  .header-content h2 {
+    font-size: 20px;
+  }
+  .header-content h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .header-content p {
+    font-size: 10px;
+  } 
 }
