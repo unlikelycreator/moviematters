@@ -1,7 +1,7 @@
 .header-image {
   height: 50%;
   -webkit-mask-image: linear-gradient(#000, rgba(0, 0, 0, 0.2));
-  mask-image: linear-gradient(#000, rgba(0,0,0,0.2));
+  mask-image: linear-gradient(#000, rgba(0, 0, 0, 0.2));
 }
 
 .slider-container {
@@ -44,7 +44,6 @@
   color: #267fdd;
 }
 
-
 .slider-controls {
   position: absolute;
   bottom: 20px;
@@ -76,13 +75,22 @@
 .card-container {
   padding-top: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.cards {
+  padding-top: 20px;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
 
 .card {
-  max-width: 180px;
+  max-width: 250px;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -143,6 +151,30 @@
   position: relative;
 }
 
+.page-navigation {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.page-nav-btn{
+  padding: 5px 10px;
+  background-color: #1d1d1d;
+  border: 1px solid #fff;
+  outline: none;
+  color: white;
+}
+
+.page-nav-btn:hover{
+  background-color: #267fdd;
+  cursor: pointer;
+}
+
+.page-nav-btn:disabled {
+  cursor:not-allowed;
+}
+
 @media all and (max-width: 720px) {
   .card {
     max-width: 160px;
@@ -150,14 +182,14 @@
   .header-content {
     bottom: 20%;
     left: 10px;
-    max-width:100%;
+    max-width: 100%;
   }
   .header-content h2 {
     font-size: 25px;
   }
   .header-content p {
     font-size: 13px;
-  }  
+  }
 }
 
 @media all and (max-width: 450px) {
@@ -167,14 +199,13 @@
   .card-footer .media-type {
     display: none;
   }
-  
 }
 
-@media (max-height: 700px){
+@media (max-height: 700px) {
   .header-content {
     bottom: 20%;
     left: 10px;
-    max-width:90%;
+    max-width: 90%;
   }
   .header-content h2 {
     font-size: 20px;
@@ -185,5 +216,5 @@
   }
   .header-content p {
     font-size: 10px;
-  } 
+  }
 }

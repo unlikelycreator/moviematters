@@ -1,0 +1,153 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1000px;
+  width: 100%;
+  max-height: 85vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+  border-radius: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.905); 
+  z-index: 5; 
+}
+
+.ss-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ss-title {
+  font-size: 30px;
+  margin: 0;
+}
+
+.ss-release-date {
+  font-size: 14px;
+  margin: 0;
+}
+
+.ss-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ss-poster {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.ss-overview {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ss-footer {
+  margin-top: 20px;
+}
+
+.ss-rating {
+  display: grid;
+  place-items: center;
+  max-width: 200px;
+  background-color: #1d1d1d82;
+  font-size: 22px;
+  color: #267fdd;
+  margin: 0;
+  border-radius: 15px;
+}
+
+.ss-genres,
+.ss-production-companies {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.ss-homepage {
+  padding: 10px 20px;
+  background-color: #267fdd;
+  display: grid;
+  place-items: center;
+  max-width: 200px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+}
+
+.button-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+span{
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.button-container button{
+  padding: 10px 20px;
+  background-color: #1d1d1d;
+  display: grid;
+  place-items: center;
+  max-width: 200px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.ss-homepage:hover {
+  background-color: #e74c3c;
+}
+
+@media (max-width: 500px){
+  .ss-screen {
+    margin-left: 0em;
+    margin-top: 30px;
+  }
+
+  .ss-search-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ss-header {
+    flex-direction: column;
+  }
+  .ss-content {
+    display: flex;
+    flex-direction: column;
+  }
+}

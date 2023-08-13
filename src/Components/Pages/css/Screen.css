@@ -1,8 +1,15 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .screen {
     margin-left: 4em;
     height: 100%;
     height: 100vh;
     overflow: auto;
+    transition: all 1s ease-in;
   }
   
  

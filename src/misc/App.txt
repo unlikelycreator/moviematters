@@ -1,0 +1,42 @@
+<button className="header-btn menu-button home" onClick={() => setIsMenuBarOpen(!isMenuBarOpen)}>
+    menu
+</button>
+<ul className={`menu-bar ${isMenuBarOpen ? "open" : ""}`}>
+    <li>
+    <button className="header-btn menu-button" onClick={() => setIsMenuBarOpen(!isMenuBarOpen)}>
+        Menu
+    </button>
+    </li>
+    <li>
+    <button
+    className="header-btn"
+    onClick={() => handleButtonClick('Home')}
+    >
+    Home
+    </button>
+</li>
+<li>
+    <button
+    className="header-btn"
+    onClick={() => handleButtonClick('profile')}
+    >
+    Profile
+    </button>
+</li>
+<li>
+    <button
+    className="header-btn"
+    onClick={() => handleButtonClick('editorial')}
+    >
+    Editorial
+    </button>
+</li>
+<li>
+    <button
+    className="header-btn"
+    onClick={() => handleButtonClick('about')}
+    >
+    About
+    </button>
+</li>
+</ul>

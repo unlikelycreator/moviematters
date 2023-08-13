@@ -1,22 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const getDataFromApi = (callback) => {
+export const getDataFromApi = (page, callback) => {
+  const url = `https://api.themoviedb.org/3/trending/all/day?language=en-US&page=${page}`;
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzI1YmEyMGJlYmY2ZDJjZDNlNmE1NmYxMmY0NWFiYyIsInN1YiI6IjY0OTFiYTM2MjYzNDYyMDBjYTFiZDE1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N2S_p3JDkD69zLbW1_GD9BZuTvtR6xH3jFT27BNpttk',
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZWIwZmY2Mzk1Yjk0MzJkZGY3NGI3NTFkZTMxYTNhNSIsInN1YiI6IjYxYjU4NjViOTA3ZjI2MDA0MDFjNzQzZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ST2cDPGD4SDET5RM3eFjmFyfvfYE9SSoW3ErGFDJnmA",
     },
   };
 
   axios
-    .get('https://api.themoviedb.org/3/trending/all/day?language=en-US', options)
+    .get(url, options)
     .then((response) => {
-      // Process the response data
       const data = response.data.results;
-      console.log(data)
-      // Pass the data to the callback function
-      if (typeof callback === 'function') {
+      if (typeof callback === "function") {
         callback(data);
       }
     })
