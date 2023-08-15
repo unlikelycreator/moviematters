@@ -6,8 +6,12 @@ function SearchScreen() {
   const [movies, setMovies] = useState([]);
   const [cardModal, setCardModal] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [castDetails, setCastDetails] = useState(null);
+
   const fetchMovieDetails = async (movieId) => {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+    const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+    const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits`;
+
     const options = {
       method: "GET",
       headers: {
@@ -18,17 +22,23 @@ function SearchScreen() {
     };
 
     try {
-      const response = await fetch(url, options);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setMovieDetails(data);
+      const [movieResponse, creditsResponse] = await Promise.all([
+        fetch(movieUrl, options),
+        fetch(creditsUrl, options),
+      ]);
+
+      if (movieResponse.ok && creditsResponse.ok) {
+        const movieData = await movieResponse.json();
+        const creditsData = await creditsResponse.json();
+
+        setMovieDetails(movieData);
+        setCastDetails(creditsData.cast);
+        setCardModal(true);
       } else {
-        console.error("Error fetching movie details:", response.statusText);
+        console.error("Error fetching movie details or cast details");
       }
-      setCardModal(true);
     } catch (error) {
-      console.error("Error fetching movie details:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -129,9 +139,9 @@ function SearchScreen() {
             <div className="ss-search-item">
               <div className="ss-header">
                 <h2 className="ss-title">{movieDetails.title}</h2>
-                <p className="ss-release-date">
-                  Release Date: {movieDetails.release_date}
-                </p>
+                <button className="ss-close-btn" onClick={handleCardModalClose}>
+                  &#10006;
+                </button>
               </div>
               <div className="ss-content">
                 <img
@@ -143,6 +153,9 @@ function SearchScreen() {
                   {" "}
                   <p className="ss-rating">
                     Rating: {movieDetails.vote_average.toFixed(1)} ★
+                  </p>
+                  <p className="ss-release-date">
+                    <span>Release Date:</span> {movieDetails.release_date}
                   </p>
                   <p className="ss-overview">
                     <span>Overview:</span> {movieDetails.overview}
@@ -159,6 +172,28 @@ function SearchScreen() {
                   </p>
                 </main>
               </div>
+              <div className="cast-details">
+                <h3>Cast</h3>
+                <div className="cast-list">
+                  {castDetails
+                    .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
+                    .map((cast) => (
+                      <div className="cast-item" key={cast.id}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                          alt={cast.name}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                          }}
+                        />
+                        <p className="cast-name">{cast.name}</p>
+                        <p className="cast-character">{cast.character}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
               <div className="ss-footer">
                 <div className="button-container">
                   <a
@@ -169,12 +204,6 @@ function SearchScreen() {
                   >
                     Visit Homepage
                   </a>
-                  <button
-                    className="ss-homepage"
-                    onClick={handleCardModalClose}
-                  >
-                    Close
-                  </button>
                 </div>
               </div>
             </div>

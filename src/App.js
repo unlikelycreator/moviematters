@@ -32,14 +32,6 @@ function App() {
     <div className="AppScreen">
       <header>
         <ul className="menu">
-        <li title="icon">
-            <button
-              className="header-btn icon"
-              onClick={() => handleButtonClick("Home")}
-            >
-              menu
-            </button>
-          </li>
           <li title="home">
             <button
               className="header-btn home"
