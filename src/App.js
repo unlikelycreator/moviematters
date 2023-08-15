@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Components/Pages/css/Header.css";
 import "./Components/Pages/css/HomeScreen.css";
-import Logo from "./Components/Pages/media/logo.png"
 
 //Screen Imports
 import HomeScreen from "./Components/Pages/HomeScreen";
