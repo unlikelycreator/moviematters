@@ -80,18 +80,25 @@ function HomeScreen() {
 
   const Card = ({ item }) => {
     return (
-      <div className="card" onClick={() => fetchMovieDetails(item.id)}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-          alt={item.title || item.name}
-        />
-        <h3>{item.title || item.name}</h3>
-        <div className="card-footer">
-          <p>{(item.first_air_date || item.release_date).split("-")[0]}</p>
-          <p className="media-type">{item.media_type}</p>
-          <p>{item.vote_average.toFixed(1)} ★</p>
-        </div>
+      <div
+      className="card"
+      onClick={() => fetchMovieDetails(item.id)}
+      key={item.id}
+    >
+      <img
+        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+        alt={item.title || item.name}
+      />
+      <h3>{item.title || item.name}</h3>
+      <div className="card-footer">
+        {item.first_air_date && (
+          <p>{item.first_air_date.split("-")[0]}</p>
+        )}
+        {item.release_date && <p>{item.release_date.split("-")[0]}</p>}
+        <p className="media-type">{item.media_type}</p>
+        {item.vote_average && <p>{item.vote_average.toFixed(1)} ★</p>}
       </div>
+    </div>
     );
   };
 
@@ -116,6 +123,7 @@ function HomeScreen() {
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${item.backdrop_path})`,
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center"
                   }}
                 >
                   <div className="header-content">
@@ -140,7 +148,7 @@ function HomeScreen() {
 
       <div className="card-container">
         <div className="cards">
-          {data.map((item) => (
+          {data.filter((item) => item.poster_path && item.backdrop_path).map((item) => (
             <Card key={item.id} item={item} />
           ))}
         </div>
@@ -178,22 +186,30 @@ function HomeScreen() {
                 src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
                 alt={movieDetails.title}
               />
-             <p className="ss-overview"> <span>Overview:</span><br/>{movieDetails.overview}</p>
-            </div>
-            <div className="ss-footer">
-              <p className="ss-rating">
-                Rating: {movieDetails.vote_average.toFixed(1)} ★
-              </p>
-              <p className="ss-genres">
-              <span>Genres:</span> &nbsp;&nbsp;{" "}
+              <main>
+                {" "}
+                <p className="ss-rating">
+                  Rating: {movieDetails.vote_average.toFixed(1)} ★
+                </p>
+                <p className="ss-overview">
+                  {" "}
+                  <span>Overview:</span>{" "}
+                  {movieDetails.overview}
+                </p>
+                <p className="ss-genres">
+                <span>Genres:</span>
                 {movieDetails.genres.map((genre) => genre.name).join(", ")}
               </p>
               <p className="ss-production-companies">
-                <span>Production Companies:</span>&nbsp;&nbsp;{" "}
+                <span>Production Companies:</span>{" "}
                 {movieDetails.production_companies
                   .map((company) => company.name)
                   .join(", ")}
               </p>
+              </main>
+            </div>
+            <div className="ss-footer">
+             
               <div className="button-container">
                 <a
                   className="ss-homepage"

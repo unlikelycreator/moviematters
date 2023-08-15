@@ -1,20 +1,27 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
 .screen {
-    margin-left: 4em;
-    height: 100%;
-    height: 100vh;
-    overflow: auto;
-    transition: all 1s ease-in;
-  }
-  
- 
-  
-  
+  margin-left: 4em;
+  height: 100%;
+  height: 100vh;
+  overflow: auto;
+  transition: all 1s ease-in;
+  text-align: center;
+  color: white;
+}
+
+.screen::-webkit-scrollbar {
+  background-color: #333;
+  width: 4px;
+}
+
+.screen::-webkit-scrollbar-thumb {
+  background-color: #267fdd;
+}
 @media all and (max-width: 500px) {
   .screen {
     margin-left: 0em;

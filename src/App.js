@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Components/Pages/css/Header.css";
 import "./Components/Pages/css/HomeScreen.css";
+import Logo from "./Components/Pages/media/logo.png"
 
 //Screen Imports
 import HomeScreen from "./Components/Pages/HomeScreen";
@@ -32,6 +33,14 @@ function App() {
     <div className="AppScreen">
       <header>
         <ul className="menu">
+        <li title="icon">
+            <button
+              className="header-btn icon"
+              onClick={() => handleButtonClick("Home")}
+            >
+              menu
+            </button>
+          </li>
           <li title="home">
             <button
               className="header-btn home"
@@ -58,7 +67,7 @@ function App() {
           </li>
           <li title="about">
             <button
-              className="header-btn active about"
+              className="header-btn about"
               onClick={() => handleButtonClick("about")}
             >
               about
@@ -83,12 +92,16 @@ function App() {
         </ul>
       </header>
       <div className="content">
-        {currentScreen === "search" && <SearchScreen currentItem={currentItem} />}
+        {currentScreen === "search" && (
+          <SearchScreen currentItem={currentItem} />
+        )}
         {currentScreen === "pencil" && <PencilScreen />}
         {currentScreen === "about" && <AboutScreen />}
         {currentScreen === "archive" && <ArchiveScreen />}
         {currentScreen === "contact" && <ContactScreen />}
-        {currentScreen === "Home" && <HomeScreen handleCardClick={handleCardClick}/>}
+        {currentScreen === "Home" && (
+          <HomeScreen handleCardClick={handleCardClick} />
+        )}
         {currentScreen === "profile" && <ProfileScreen />}
         {currentScreen === "editorial" && <EditorialScreen />}
       </div>

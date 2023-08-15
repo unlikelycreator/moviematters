@@ -1,6 +1,6 @@
 @import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css");
 
-.AppScreen{
+.AppScreen {
   overflow: hidden;
 }
 
@@ -17,14 +17,14 @@
   z-index: 10;
   overflow: hidden;
   box-shadow: 2px 0 18px rgba(0, 0, 0, 0.26);
+  border-right: 1px solid rgba(95, 95, 95, 0.618);
 }
 
-.header-btn{
+.header-btn {
   border: none;
   margin: none;
   background-color: transparent;
   width: 100%;
-
 }
 
 .menu li button {
@@ -34,9 +34,9 @@
   width: 5em;
   line-height: 5em;
   text-align: center;
-  color: #72739f;
+  color: white;
   position: relative;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.016);
   transition: background 0.1s ease-in-out;
 }
 
@@ -72,12 +72,20 @@
 }
 
 .menu li button.home:before {
-  content: "\f039";
+  font-size: 35px;
+  font-weight: 600;
+  content: "\2302";
+}
+
+.menu li button.icon:before {
+  font-size: 35px;
+  font-weight: 600;
+  content: "\1F3A5";
 }
 
 .menu-bar li button:hover,
-.menu li button:hover,
-.menu li:first-child button {
+.menu li button:hover{
+  cursor: pointer;
   background: #267fdd;
   color: #fff;
 }
@@ -104,12 +112,7 @@
   transition: background 0.1s ease-in-out;
 }
 
-.menu-bar li:first-child button {
-  height: 5em;
-  background: #267fdd;
-  color: #fff;
-  line-height: 5;
-}
+
 
 .para {
   color: #033f72;
@@ -123,7 +126,7 @@
   height: 100%;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 600px) {
   .container {
     margin-top: 100px;
   }
