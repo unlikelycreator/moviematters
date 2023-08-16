@@ -23,3 +23,4 @@ export const getDataFromApi = (page, callback) => {
       console.error(error);
     });
 };
+

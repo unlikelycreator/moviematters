@@ -154,6 +154,7 @@ function HomeScreen() {
       </div>
 
       <div className="card-container">
+        <h1>Trending</h1>
         <div className="cards">
           {data
             .filter((item) => item.poster_path && item.backdrop_path)

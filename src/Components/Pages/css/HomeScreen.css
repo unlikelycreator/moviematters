@@ -78,15 +78,42 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-bottom: 30px;
+  margin: 0px 30px 30px 30px;
 }
 
 .cards {
-  padding-top: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+
+.card-scroller{
+  width: 80%;
+  display: flex;
+  overflow: auto;
+}
+
+
+.card-scroller::-webkit-scrollbar{
+  height: 8px;
+  background-color: rgb(0, 0, 0);
+}
+
+.card-scroller::-webkit-scrollbar-thumb{
+  background-color: #267fdd;
+  border-radius: 20px;
+}
+
+.page-navigation-scroll{
+  position: absolute;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .card {
@@ -103,6 +130,32 @@
   overflow: hidden;
   transition: transform 0.3s;
 }
+
+.scroll-card {
+  min-width: 140px;
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #1d1d1d;
+  text-align: left;
+  margin: 20px;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.scroll-card h3 {
+  font-size: 15px;
+  margin: 5px 10px 0px 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .card:hover {
   transform: scale(1.1); /* Zoom in the image on hover */
 }
@@ -164,6 +217,7 @@
   border: 1px solid #fff;
   outline: none;
   color: white;
+  z-index: 10;
 }
 
 .page-nav-btn:hover {
@@ -226,8 +280,16 @@
 }
 
 @media all and (max-width: 720px) {
+
+  .card-container{
+    margin: 0px 0px 0px 0px;
+  }
   .card {
-    max-width: 160px;
+    max-width: 130px;
+  }
+
+  .card-footer .media-type {
+    display: none;
   }
   .header-content {
     bottom: 20%;
@@ -240,12 +302,41 @@
   .header-content p {
     font-size: 13px;
   }
+  .card-scroller{
+    width: 95%;
+  }
+  
+  .scroll-card {
+    min-width: 110px;
+    max-width: 120px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #1d1d1d;
+    text-align: left;
+    margin: 10px;
+    color: white;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .scroll-card h3 {
+    font-size: 10px;
+    margin: 5px 10px 0px 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+
+  .card-footer p{
+    font-size: 10px;
+  }
 }
 
 @media all and (max-width: 450px) {
-  .card {
-    max-width: 140px;
-  }
   .card-footer .media-type {
     display: none;
   }
