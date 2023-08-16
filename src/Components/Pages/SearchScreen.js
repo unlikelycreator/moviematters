@@ -4,6 +4,7 @@ import "./css/HomeScreen.css";
 function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [topmovies, setTopMovies] = useState([]);
   const [upcomingmovies, setUpcomingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [cardModal, setCardModal] = useState(false);
@@ -89,7 +90,9 @@ function SearchScreen() {
 
           const data = await response.json();
           console.log(data);
-          setMovies(data.results);
+          setTopMovies(data.results);
+          setPopularMovies([]);
+          setUpcomingMovies([]);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -150,345 +153,471 @@ function SearchScreen() {
         />
       </div>
 
-    
-      <div className="card-container">
-        {!searchQuery ? <h1>Upcoming Movies</h1> : <h1>Search Results</h1>}
-        <div className="card-scroller">
-          {upcomingmovies
-            .filter((item) => item.poster_path)
-            .map((item) => (
-              <div
-                className="scroll-card"
-                onClick={() => fetchMovieDetails(item.id)}
-                key={item.id}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                  alt={item.title || item.name}
-                />
-                <h3>{item.title || item.name}</h3>
-                <div className="card-footer">
-                  {item.first_air_date && (
-                    <p>{item.first_air_date.split("-")[0]}</p>
-                  )}
-                  {item.release_date && (
-                    <p>{item.release_date.split("-")[0]}</p>
-                  )}
-                  <p className="media-type">{item.media_type}</p>
-                  {item.vote_average && <p>{item.vote_average.toFixed(1)} ★</p>}
-                </div>
-              </div>
-            ))}
-
-          {cardModal && <div className="overlay"></div>}
-          {cardModal && (
-            <div className="modal">
-              <div className="ss-search-item">
-                <div className="ss-header">
-                  <h2 className="ss-title">{movieDetails.title}</h2>
-                  <button
-                    className="ss-close-btn"
-                    onClick={handleCardModalClose}
-                  >
-                    &#10006;
-                  </button>
-                </div>
-                <div className="ss-content">
+      {searchQuery && (
+        <div className="card-container">
+          {!searchQuery ? <h1>Top Rated</h1> : <h1>Search Results</h1>}
+          <div className="card-scroller">
+            {movies
+              .filter((item) => item.poster_path)
+              .map((item) => (
+                <div
+                  className="scroll-card"
+                  onClick={() => fetchMovieDetails(item.id)}
+                  key={item.id}
+                >
                   <img
-                    className="ss-poster"
-                    src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
-                    alt={movieDetails.title}
+                    src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                    alt={item.title || item.name}
                   />
-                  <main>
-                    {" "}
-                    <p className="ss-rating">
-                      Rating: {movieDetails.vote_average.toFixed(1)} ★
-                    </p>
-                    <p className="ss-release-date">
-                      <span>Release Date:</span> {movieDetails.release_date}
-                    </p>
-                    <p className="ss-overview">
-                      <span>Overview:</span> {movieDetails.overview}
-                    </p>
-                    <p className="ss-genres">
-                      <span>Genres:</span>{" "}
-                      {movieDetails.genres
-                        .map((genre) => genre.name)
-                        .join(", ")}
-                    </p>
-                    <p className="ss-production-companies">
-                      <span>Production Companies:</span>{" "}
-                      {movieDetails.production_companies
-                        .map((company) => company.name)
-                        .join(", ")}
-                    </p>
-                  </main>
-                </div>
-                <div className="cast-details">
-                  <h3>Cast</h3>
-                  <div className="cast-list">
-                    {castDetails
-                      .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
-                      .map((cast) => (
-                        <div className="cast-item" key={cast.id}>
-                          <img
-                            src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
-                            alt={cast.name}
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                            }}
-                          />
-                          <p className="cast-name">{cast.name}</p>
-                          <p className="cast-character">{cast.character}</p>
-                        </div>
-                      ))}
+                  <h3>{item.title || item.name}</h3>
+                  <div className="card-footer">
+                    {item.first_air_date && (
+                      <p>{item.first_air_date.split("-")[0]}</p>
+                    )}
+                    {item.release_date && (
+                      <p>{item.release_date.split("-")[0]}</p>
+                    )}
+                    <p className="media-type">{item.media_type}</p>
+                    {item.vote_average && (
+                      <p>{item.vote_average.toFixed(1)} ★</p>
+                    )}
                   </div>
                 </div>
-                <div className="ss-footer">
-                  <div className="button-container">
-                    <a
-                      className="ss-homepage"
-                      href={movieDetails.homepage}
-                      target="_blank"
-                      rel="noopener noreferrer"
+              ))}
+
+            {cardModal && <div className="overlay"></div>}
+            {cardModal && (
+              <div className="modal">
+                <div className="ss-search-item">
+                  <div className="ss-header">
+                    <h2 className="ss-title">{movieDetails.title}</h2>
+                    <button
+                      className="ss-close-btn"
+                      onClick={handleCardModalClose}
                     >
-                      Visit Homepage
-                    </a>
+                      &#10006;
+                    </button>
+                  </div>
+                  <div className="ss-content">
+                    <img
+                      className="ss-poster"
+                      src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+                      alt={movieDetails.title}
+                    />
+                    <main>
+                      {" "}
+                      <p className="ss-rating">
+                        Rating: {movieDetails.vote_average.toFixed(1)} ★
+                      </p>
+                      <p className="ss-release-date">
+                        <span>Release Date:</span> {movieDetails.release_date}
+                      </p>
+                      <p className="ss-overview">
+                        <span>Overview:</span> {movieDetails.overview}
+                      </p>
+                      <p className="ss-genres">
+                        <span>Genres:</span>{" "}
+                        {movieDetails.genres
+                          .map((genre) => genre.name)
+                          .join(", ")}
+                      </p>
+                      <p className="ss-production-companies">
+                        <span>Production Companies:</span>{" "}
+                        {movieDetails.production_companies
+                          .map((company) => company.name)
+                          .join(", ")}
+                      </p>
+                    </main>
+                  </div>
+                  <div className="cast-details">
+                    <h3>Cast</h3>
+                    <div className="cast-list">
+                      {castDetails
+                        .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
+                        .map((cast) => (
+                          <div className="cast-item" key={cast.id}>
+                            <img
+                              src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                              alt={cast.name}
+                              style={{
+                                width: "50px",
+                                height: "50px",
+                                borderRadius: "50%",
+                              }}
+                            />
+                            <p className="cast-name">{cast.name}</p>
+                            <p className="cast-character">{cast.character}</p>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className="ss-footer">
+                    <div className="button-container">
+                      <a
+                        className="ss-homepage"
+                        href={movieDetails.homepage}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Homepage
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="card-container">
-        {!searchQuery ? <h1>Popular Movies</h1> : <h1>Search Results</h1>}
-        <div className="card-scroller">
-          {popularMovies
-            .filter((item) => item.poster_path)
-            .map((item) => (
-              <div
-                className="scroll-card"
-                onClick={() => fetchMovieDetails(item.id)}
-                key={item.id}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                  alt={item.title || item.name}
-                />
-                <h3>{item.title || item.name}</h3>
-                <div className="card-footer">
-                  {item.first_air_date && (
-                    <p>{item.first_air_date.split("-")[0]}</p>
-                  )}
-                  {item.release_date && (
-                    <p>{item.release_date.split("-")[0]}</p>
-                  )}
-                  <p className="media-type">{item.media_type}</p>
-                  {item.vote_average && <p>{item.vote_average.toFixed(1)} ★</p>}
-                </div>
-              </div>
-            ))}
-
-          {cardModal && <div className="overlay"></div>}
-          {cardModal && (
-            <div className="modal">
-              <div className="ss-search-item">
-                <div className="ss-header">
-                  <h2 className="ss-title">{movieDetails.title}</h2>
-                  <button
-                    className="ss-close-btn"
-                    onClick={handleCardModalClose}
+      {!searchQuery && (
+        <>
+          <div className="card-container">
+            <h1>Upcoming Movies</h1>
+            <div className="card-scroller">
+              {upcomingmovies
+                .filter((item) => item.poster_path)
+                .map((item) => (
+                  <div
+                    className="scroll-card"
+                    onClick={() => fetchMovieDetails(item.id)}
+                    key={item.id}
                   >
-                    &#10006;
-                  </button>
-                </div>
-                <div className="ss-content">
-                  <img
-                    className="ss-poster"
-                    src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
-                    alt={movieDetails.title}
-                  />
-                  <main>
-                    {" "}
-                    <p className="ss-rating">
-                      Rating: {movieDetails.vote_average.toFixed(1)} ★
-                    </p>
-                    <p className="ss-release-date">
-                      <span>Release Date:</span> {movieDetails.release_date}
-                    </p>
-                    <p className="ss-overview">
-                      <span>Overview:</span> {movieDetails.overview}
-                    </p>
-                    <p className="ss-genres">
-                      <span>Genres:</span>{" "}
-                      {movieDetails.genres
-                        .map((genre) => genre.name)
-                        .join(", ")}
-                    </p>
-                    <p className="ss-production-companies">
-                      <span>Production Companies:</span>{" "}
-                      {movieDetails.production_companies
-                        .map((company) => company.name)
-                        .join(", ")}
-                    </p>
-                  </main>
-                </div>
-                <div className="cast-details">
-                  <h3>Cast</h3>
-                  <div className="cast-list">
-                    {castDetails
-                      .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
-                      .map((cast) => (
-                        <div className="cast-item" key={cast.id}>
-                          <img
-                            src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
-                            alt={cast.name}
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                            }}
-                          />
-                          <p className="cast-name">{cast.name}</p>
-                          <p className="cast-character">{cast.character}</p>
-                        </div>
-                      ))}
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                      alt={item.title || item.name}
+                    />
+                    <h3>{item.title || item.name}</h3>
+                    <div className="card-footer">
+                      {item.first_air_date && (
+                        <p>{item.first_air_date.split("-")[0]}</p>
+                      )}
+                      {item.release_date && (
+                        <p>{item.release_date.split("-")[0]}</p>
+                      )}
+                      <p className="media-type">{item.media_type}</p>
+                      {item.vote_average && (
+                        <p>{item.vote_average.toFixed(1)} ★</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+              {cardModal && <div className="overlay"></div>}
+              {cardModal && (
+                <div className="modal">
+                  <div className="ss-search-item">
+                    <div className="ss-header">
+                      <h2 className="ss-title">{movieDetails.title}</h2>
+                      <button
+                        className="ss-close-btn"
+                        onClick={handleCardModalClose}
+                      >
+                        &#10006;
+                      </button>
+                    </div>
+                    <div className="ss-content">
+                      <img
+                        className="ss-poster"
+                        src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+                        alt={movieDetails.title}
+                      />
+                      <main>
+                        {" "}
+                        <p className="ss-rating">
+                          Rating: {movieDetails.vote_average.toFixed(1)} ★
+                        </p>
+                        <p className="ss-release-date">
+                          <span>Release Date:</span> {movieDetails.release_date}
+                        </p>
+                        <p className="ss-overview">
+                          <span>Overview:</span> {movieDetails.overview}
+                        </p>
+                        <p className="ss-genres">
+                          <span>Genres:</span>{" "}
+                          {movieDetails.genres
+                            .map((genre) => genre.name)
+                            .join(", ")}
+                        </p>
+                        <p className="ss-production-companies">
+                          <span>Production Companies:</span>{" "}
+                          {movieDetails.production_companies
+                            .map((company) => company.name)
+                            .join(", ")}
+                        </p>
+                      </main>
+                    </div>
+                    <div className="cast-details">
+                      <h3>Cast</h3>
+                      <div className="cast-list">
+                        {castDetails
+                          .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
+                          .map((cast) => (
+                            <div className="cast-item" key={cast.id}>
+                              <img
+                                src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                                alt={cast.name}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                              <p className="cast-name">{cast.name}</p>
+                              <p className="cast-character">{cast.character}</p>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <div className="ss-footer">
+                      <div className="button-container">
+                        <a
+                          className="ss-homepage"
+                          href={movieDetails.homepage}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visit Homepage
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="ss-footer">
-                  <div className="button-container">
-                    <a
-                      className="ss-homepage"
-                      href={movieDetails.homepage}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Visit Homepage
-                    </a>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      <div className="card-container">
-        {!searchQuery ? <h1>Top Rated</h1> : <h1>Search Results</h1>}
-        <div className="card-scroller">
-          {movies
-            .filter((item) => item.poster_path)
-            .map((item) => (
-              <div
-                className="scroll-card"
-                onClick={() => fetchMovieDetails(item.id)}
-                key={item.id}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                  alt={item.title || item.name}
-                />
-                <h3>{item.title || item.name}</h3>
-                <div className="card-footer">
-                  {item.first_air_date && (
-                    <p>{item.first_air_date.split("-")[0]}</p>
-                  )}
-                  {item.release_date && (
-                    <p>{item.release_date.split("-")[0]}</p>
-                  )}
-                  <p className="media-type">{item.media_type}</p>
-                  {item.vote_average && <p>{item.vote_average.toFixed(1)} ★</p>}
-                </div>
-              </div>
-            ))}
-
-          {cardModal && <div className="overlay"></div>}
-          {cardModal && (
-            <div className="modal">
-              <div className="ss-search-item">
-                <div className="ss-header">
-                  <h2 className="ss-title">{movieDetails.title}</h2>
-                  <button
-                    className="ss-close-btn"
-                    onClick={handleCardModalClose}
+          <div className="card-container">
+            {!searchQuery ? <h1>Popular Movies</h1> : <h1>Search Results</h1>}
+            <div className="card-scroller">
+              {popularMovies
+                .filter((item) => item.poster_path)
+                .map((item) => (
+                  <div
+                    className="scroll-card"
+                    onClick={() => fetchMovieDetails(item.id)}
+                    key={item.id}
                   >
-                    &#10006;
-                  </button>
-                </div>
-                <div className="ss-content">
-                  <img
-                    className="ss-poster"
-                    src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
-                    alt={movieDetails.title}
-                  />
-                  <main>
-                    {" "}
-                    <p className="ss-rating">
-                      Rating: {movieDetails.vote_average.toFixed(1)} ★
-                    </p>
-                    <p className="ss-release-date">
-                      <span>Release Date:</span> {movieDetails.release_date}
-                    </p>
-                    <p className="ss-overview">
-                      <span>Overview:</span> {movieDetails.overview}
-                    </p>
-                    <p className="ss-genres">
-                      <span>Genres:</span>{" "}
-                      {movieDetails.genres
-                        .map((genre) => genre.name)
-                        .join(", ")}
-                    </p>
-                    <p className="ss-production-companies">
-                      <span>Production Companies:</span>{" "}
-                      {movieDetails.production_companies
-                        .map((company) => company.name)
-                        .join(", ")}
-                    </p>
-                  </main>
-                </div>
-                <div className="cast-details">
-                  <h3>Cast</h3>
-                  <div className="cast-list">
-                    {castDetails
-                      .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
-                      .map((cast) => (
-                        <div className="cast-item" key={cast.id}>
-                          <img
-                            src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
-                            alt={cast.name}
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                            }}
-                          />
-                          <p className="cast-name">{cast.name}</p>
-                          <p className="cast-character">{cast.character}</p>
-                        </div>
-                      ))}
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                      alt={item.title || item.name}
+                    />
+                    <h3>{item.title || item.name}</h3>
+                    <div className="card-footer">
+                      {item.first_air_date && (
+                        <p>{item.first_air_date.split("-")[0]}</p>
+                      )}
+                      {item.release_date && (
+                        <p>{item.release_date.split("-")[0]}</p>
+                      )}
+                      <p className="media-type">{item.media_type}</p>
+                      {item.vote_average && (
+                        <p>{item.vote_average.toFixed(1)} ★</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+              {cardModal && <div className="overlay"></div>}
+              {cardModal && (
+                <div className="modal">
+                  <div className="ss-search-item">
+                    <div className="ss-header">
+                      <h2 className="ss-title">{movieDetails.title}</h2>
+                      <button
+                        className="ss-close-btn"
+                        onClick={handleCardModalClose}
+                      >
+                        &#10006;
+                      </button>
+                    </div>
+                    <div className="ss-content">
+                      <img
+                        className="ss-poster"
+                        src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+                        alt={movieDetails.title}
+                      />
+                      <main>
+                        {" "}
+                        <p className="ss-rating">
+                          Rating: {movieDetails.vote_average.toFixed(1)} ★
+                        </p>
+                        <p className="ss-release-date">
+                          <span>Release Date:</span> {movieDetails.release_date}
+                        </p>
+                        <p className="ss-overview">
+                          <span>Overview:</span> {movieDetails.overview}
+                        </p>
+                        <p className="ss-genres">
+                          <span>Genres:</span>{" "}
+                          {movieDetails.genres
+                            .map((genre) => genre.name)
+                            .join(", ")}
+                        </p>
+                        <p className="ss-production-companies">
+                          <span>Production Companies:</span>{" "}
+                          {movieDetails.production_companies
+                            .map((company) => company.name)
+                            .join(", ")}
+                        </p>
+                      </main>
+                    </div>
+                    <div className="cast-details">
+                      <h3>Cast</h3>
+                      <div className="cast-list">
+                        {castDetails
+                          .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
+                          .map((cast) => (
+                            <div className="cast-item" key={cast.id}>
+                              <img
+                                src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                                alt={cast.name}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                              <p className="cast-name">{cast.name}</p>
+                              <p className="cast-character">{cast.character}</p>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <div className="ss-footer">
+                      <div className="button-container">
+                        <a
+                          className="ss-homepage"
+                          href={movieDetails.homepage}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visit Homepage
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="ss-footer">
-                  <div className="button-container">
-                    <a
-                      className="ss-homepage"
-                      href={movieDetails.homepage}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Visit Homepage
-                    </a>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+
+          <div className="card-container">
+            {!searchQuery ? <h1>Top Rated</h1> : <h1>Search Results</h1>}
+            <div className="card-scroller">
+              {topmovies
+                .filter((item) => item.poster_path)
+                .map((item) => (
+                  <div
+                    className="scroll-card"
+                    onClick={() => fetchMovieDetails(item.id)}
+                    key={item.id}
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                      alt={item.title || item.name}
+                    />
+                    <h3>{item.title || item.name}</h3>
+                    <div className="card-footer">
+                      {item.first_air_date && (
+                        <p>{item.first_air_date.split("-")[0]}</p>
+                      )}
+                      {item.release_date && (
+                        <p>{item.release_date.split("-")[0]}</p>
+                      )}
+                      <p className="media-type">{item.media_type}</p>
+                      {item.vote_average && (
+                        <p>{item.vote_average.toFixed(1)} ★</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+              {cardModal && <div className="overlay"></div>}
+              {cardModal && (
+                <div className="modal">
+                  <div className="ss-search-item">
+                    <div className="ss-header">
+                      <h2 className="ss-title">{movieDetails.title}</h2>
+                      <button
+                        className="ss-close-btn"
+                        onClick={handleCardModalClose}
+                      >
+                        &#10006;
+                      </button>
+                    </div>
+                    <div className="ss-content">
+                      <img
+                        className="ss-poster"
+                        src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+                        alt={movieDetails.title}
+                      />
+                      <main>
+                        {" "}
+                        <p className="ss-rating">
+                          Rating: {movieDetails.vote_average.toFixed(1)} ★
+                        </p>
+                        <p className="ss-release-date">
+                          <span>Release Date:</span> {movieDetails.release_date}
+                        </p>
+                        <p className="ss-overview">
+                          <span>Overview:</span> {movieDetails.overview}
+                        </p>
+                        <p className="ss-genres">
+                          <span>Genres:</span>{" "}
+                          {movieDetails.genres
+                            .map((genre) => genre.name)
+                            .join(", ")}
+                        </p>
+                        <p className="ss-production-companies">
+                          <span>Production Companies:</span>{" "}
+                          {movieDetails.production_companies
+                            .map((company) => company.name)
+                            .join(", ")}
+                        </p>
+                      </main>
+                    </div>
+                    <div className="cast-details">
+                      <h3>Cast</h3>
+                      <div className="cast-list">
+                        {castDetails
+                          .filter((cast) => cast.profile_path) // Filter out cast members without a profile_path
+                          .map((cast) => (
+                            <div className="cast-item" key={cast.id}>
+                              <img
+                                src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                                alt={cast.name}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                              <p className="cast-name">{cast.name}</p>
+                              <p className="cast-character">{cast.character}</p>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <div className="ss-footer">
+                      <div className="button-container">
+                        <a
+                          className="ss-homepage"
+                          href={movieDetails.homepage}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visit Homepage
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
