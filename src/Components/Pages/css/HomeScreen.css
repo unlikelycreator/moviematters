@@ -285,7 +285,8 @@
     margin: 0px 0px 0px 0px;
   }
   .card {
-    max-width: 130px;
+    margin: 10px;
+    max-width: 160px;
   }
 
   .card-footer .media-type {

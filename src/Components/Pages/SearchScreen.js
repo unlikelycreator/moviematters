@@ -155,13 +155,13 @@ function SearchScreen() {
 
       {searchQuery && (
         <div className="card-container">
-          {!searchQuery ? <h1>Top Rated</h1> : <h1>Search Results</h1>}
-          <div className="card-scroller">
+          <h1>Search Results</h1>
+          <div className="cards">
             {movies
               .filter((item) => item.poster_path)
               .map((item) => (
                 <div
-                  className="scroll-card"
+                  className="card"
                   onClick={() => fetchMovieDetails(item.id)}
                   key={item.id}
                 >
