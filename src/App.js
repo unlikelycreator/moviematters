@@ -83,16 +83,12 @@ function App() {
         </ul>
       </header>
       <div className="content">
-        {currentScreen === "search" && (
-          <SearchScreen currentItem={currentItem} />
-        )}
+        {currentScreen === "search" && (<SearchScreen currentItem={currentItem} />)}
         {currentScreen === "pencil" && <PencilScreen />}
         {currentScreen === "about" && <AboutScreen />}
         {currentScreen === "archive" && <ArchiveScreen />}
         {currentScreen === "contact" && <ContactScreen />}
-        {currentScreen === "Home" && (
-          <HomeScreen handleCardClick={handleCardClick} />
-        )}
+        {currentScreen === "Home" && (<HomeScreen handleCardClick={handleCardClick} />)}
         {currentScreen === "profile" && <ProfileScreen />}
         {currentScreen === "editorial" && <EditorialScreen />}
       </div>
